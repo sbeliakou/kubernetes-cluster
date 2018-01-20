@@ -57,6 +57,7 @@ $ vagrant destroy
 
 # Other
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
+- http://hyperpolyglot.org/json
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)
