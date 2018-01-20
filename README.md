@@ -25,9 +25,9 @@ $ vagrant destroy
 - Master Isolation (worker_count = 0)
 
 ## Deployed Applications/Services
-- Kubernetes Dashboard
-- Grafana + InfluxDB
-- Prometheus (TODO)
+- [x] Kubernetes Dashboard
+- [x] Grafana + InfluxDB
+- [ ] Prometheus (TODO)
 
 ## Used Documentation
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
