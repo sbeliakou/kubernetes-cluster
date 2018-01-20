@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# set -e
-
-export MODE=$1
-export IPADDR=$2
-export TOKEN=$3
-
 echo "Updating System"
 yum update -y
 
@@ -39,17 +33,9 @@ EOF
 echo "Installing Docker and Kubernetes"
 yum install -y docker runc kubelet kubeadm kubectl kubernetes-cni 
 
-docker_opts="exec-opt"
-if [[ "$(docker --version)" =~ 1.12. ]]
-then 
-    docker_opts="exec-opt"
-else
-    docker_opts="exec-opts"
-fi
-
 cat << EOF > /etc/docker/daemon.json
 {
-    "${docker_opts}": ["native.cgroupdriver=systemd"]
+    "$([[ $(docker --version) =~ 1.12. ]] && echo exec-opt || echo exec-opts)": ["native.cgroupdriver=systemd"]
 }
 EOF
 
@@ -66,33 +52,3 @@ systemctl enable kubelet
 # Disable SWAP (As of release Kubernetes 1.8.0, kubelet will not work with enabled swap.)
 sed -i 's/[^#]\(.*swap.*\)/# \1/' /etc/fstab
 swapoff --all
-
-
-if [ "${MODE}" == "master" ] && [ -d /etc/kubernetes/manifests ]; then
-    
-    # Initializing Master
-    echo kubeadm init --apiserver-advertise-address ${IPADDR} --token ${TOKEN} --pod-network-cidr 10.244.0.0/16
-    kubeadm init \
-        --pod-network-cidr 10.244.0.0/16 \
-        --apiserver-advertise-address ${IPADDR} \
-        --token ${TOKEN}
-
-    mkdir -p $HOME/.kube
-    /bin/cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
-    chown $(id -u):$(id -g) $HOME/.kube/config
-
-    # Installing a Pod Network
-    kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
-
-    # kubectl -n kube-system get ds
-    # kubectl -n kube-system get ds -l 'component=kube-proxy' -o json | jq '.items[0].spec.template.spec.containers[0].command |= .+ ["--proxy-mode=userspace"]'
-fi
-
-if [ "${MODE}" == "worker" ];
-then
-    # Joining the Node
-    kubeadm join --token #{$token} --discovery-token-unsafe-skip-ca-verification ${IPADDR}:6443
-fi
-
-# docker --version
-# kubectl version
