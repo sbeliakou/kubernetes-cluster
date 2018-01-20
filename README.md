@@ -28,21 +28,35 @@ $ vagrant destroy
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
 - [ ] Ingress Controller
-- [ ] Prometheus (TODO)
+- [ ] Applications Deployment
+- [ ] Helm Tiller
+- [ ] Prometheus
 
 ## Used Documentation
+
+# Basic Installation and Configuration
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
-- https://github.com/kubernetes/dashboard
-- https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
+
+# A Pod Network (Flannel)
 - https://github.com/coreos/flannel
 - https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+
+# Kubernetes Dashboard
 - https://github.com/kubernetes/dashboard
+- https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
+
+# Grafana and InfluxDB
 - https://github.com/kubernetes/heapster
 - https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md
 - https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
-- https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
+
+# Ingress Controller
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
+- https://github.com/kubernetes/ingress-gce/blob/master/BETA_LIMITATIONS.md#glbc-beta-limitations
+
+# Other
+- https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)
