@@ -27,6 +27,7 @@ $ vagrant destroy
 ## Deployed Applications/Services
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
+- [ ] Ingress Controller
 - [ ] Prometheus (TODO)
 
 ## Used Documentation
@@ -41,6 +42,7 @@ $ vagrant destroy
 - https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md
 - https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
+- https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)
