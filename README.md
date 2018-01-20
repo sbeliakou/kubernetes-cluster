@@ -1,4 +1,4 @@
-### Local Kubernetes Environment on Vagrant/Virtualbox and CentOS 7
+# Local Kubernetes Environment on Vagrant/Virtualbox and CentOS 7
 
 ## HOW TO
 - [Config File](config.rb)
@@ -34,32 +34,33 @@ $ vagrant destroy
 
 ## Used Documentation
 
-# Basic Installation and Configuration
+### Basic Installation and Configuration
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 - https://kubernetes.io/docs/setup/independent/troubleshooting-kubeadm/
 
-# A Pod Network (Flannel)
+### A Pod Network (Flannel)
 - https://github.com/coreos/flannel
 - https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
 
-# Kubernetes Dashboard
+### Kubernetes Dashboard
 - https://github.com/kubernetes/dashboard
 - https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 
-# Grafana and InfluxDB
+### Grafana and InfluxDB
 - https://github.com/kubernetes/heapster
 - https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md
 - https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
 
-# Ingress Controller
+### Ingress Controller
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 - https://github.com/kubernetes/ingress-gce/blob/master/BETA_LIMITATIONS.md#glbc-beta-limitations
+- https://github.com/kubernetes/ingress-nginx/tree/master/deploy
 
-# Kubernetes Tutorials
+### Kubernetes Tutorials
 - https://kubernetes.io/docs/tutorials/
 
-# Other
+### Other
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
 - http://hyperpolyglot.org/json
 
