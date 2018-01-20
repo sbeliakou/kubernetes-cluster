@@ -27,7 +27,7 @@ $ vagrant destroy
 ## Deployed Applications/Services
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
-- [ ] Ingress Controller
+- [x] Ingress Controller
 - [ ] Applications Deployment
 - [ ] Helm Tiller
 - [ ] Prometheus
