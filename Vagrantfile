@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
             end
 
             if (index == $worker_count and index > 0) then
-                config.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-dashboard.sh"
+                node.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-dashboard.sh"
             end
         end
     end

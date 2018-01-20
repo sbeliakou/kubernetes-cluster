@@ -50,5 +50,6 @@ systemctl enable docker
 systemctl enable kubelet
 
 # Disable SWAP (As of release Kubernetes 1.8.0, kubelet will not work with enabled swap.)
+echo "Disabling SWAP"
 sed -i 's/[^#]\(.*swap.*\)/# \1/' /etc/fstab
 swapoff --all

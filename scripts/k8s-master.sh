@@ -13,12 +13,13 @@ if [ ! -e /etc/kubernetes/kubelet.conf ]; then
     mkdir -p $HOME/.kube
     /bin/cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
     chown $(id -u):$(id -g) $HOME/.kube/config
+    rm -rf /vagrant/.kube
     /bin/cp -rf $HOME/.kube /vagrant/.kube
 
     # Installing a Pod Network
     # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
     # https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
-    kubectl apply -f /vagrant/scripts/configs/kube-flannel.yaml
+    kubectl apply -f /vagrant/configs/kube-flannel.yaml
 
     # Wait until Master is Up
     while kubectl get nodes | grep master | grep NotReady >/dev/null;
