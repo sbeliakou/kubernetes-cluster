@@ -7,4 +7,4 @@ $worker_count = 0
 # Total memory of nodes
 $worker_memory = 1536
 # Add Grafana with InfluxDB (work with heapster)
-$grafana = false
+$grafana = true
