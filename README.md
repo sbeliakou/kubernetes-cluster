@@ -27,6 +27,7 @@ $ vagrant destroy
 ## Deployed Applications/Services
 - Kubernetes Dashboard
 - Grafana + InfluxDB
+- Prometheus (TODO)
 
 ## Used Documentation
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
@@ -36,8 +37,10 @@ $ vagrant destroy
 - https://github.com/coreos/flannel
 - https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
 - https://github.com/kubernetes/dashboard
+- https://github.com/kubernetes/heapster
 - https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md
 - https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
+- https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)
