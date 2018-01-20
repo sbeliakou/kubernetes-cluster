@@ -29,6 +29,8 @@ $ vagrant destroy
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 - https://github.com/kubernetes/dashboard
 - https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
+- https://github.com/coreos/flannel
+- https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)
