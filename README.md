@@ -63,6 +63,7 @@ $ vagrant destroy
 ### Other
 - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 - https://github.com/Praqma/LearnKubernetes/blob/master/kamran/Kubernetes-kubectl-cheat-sheet.md
+- http://design.jboss.org/redhatdeveloper/marketing/kubernetes_cheatsheet/cheatsheet/cheat_sheet/images/kubernetes_cheat_sheet_r1v1.pdf
 - https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/
 - http://hyperpolyglot.org/json
 
