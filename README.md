@@ -24,6 +24,10 @@ $ vagrant destroy
 - Master + Workers (worker_count > 0)
 - Master Isolation (worker_count = 0)
 
+## Deployed Applications/Services
+- Kubernetes Dashboard
+- Grafana + InfluxDB
+
 ## Used Documentation
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
@@ -31,6 +35,9 @@ $ vagrant destroy
 - https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 - https://github.com/coreos/flannel
 - https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+- https://github.com/kubernetes/dashboard
+- https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md
+- https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
 
 ## Fixes & Work Arounds
 - [VirtualBox NAT Interface](Vagrantfile#L21)

@@ -30,6 +30,10 @@ Vagrant.configure("2") do |config|
             if (index == $worker_count) then
                 node.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-master-isolation.sh" if ($worker_count == 0)
                 node.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-dashboard.sh"
+                node.vm.provision "shell" do |shell|
+                    shell.inline = "bash /vagrant/scripts/k8s-grafana.sh $1"
+                    shell.args = [workerIP(0)]
+                end
             end
         end
     end
