@@ -2,4 +2,7 @@
 
 # https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 
-kubectl taint nodes --all node-role.kubernetes.io/master-
+if [ ! -e /etc/kubernetes/.masterisolation ]; then
+	kubectl taint nodes --all node-role.kubernetes.io/master-
+	touch /etc/kubernetes/.masterisolation
+fi
