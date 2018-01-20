@@ -37,6 +37,7 @@ $ vagrant destroy
 # Basic Installation and Configuration
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+- https://kubernetes.io/docs/setup/independent/troubleshooting-kubeadm/
 
 # A Pod Network (Flannel)
 - https://github.com/coreos/flannel
