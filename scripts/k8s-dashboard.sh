@@ -1,5 +1,7 @@
 #!/bin/bash
+
 # https://github.com/kubernetes/dashboard
+# https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 
 dash=$(kubectl get deployments --all-namespaces | grep kubernetes-dashboard >/dev/null; echo $?)
 if [ $dash -ne 0 ]; then 

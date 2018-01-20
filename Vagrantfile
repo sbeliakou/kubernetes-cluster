@@ -27,7 +27,8 @@ Vagrant.configure("2") do |config|
                 shell.args = [workerIP(0), $token]
             end
 
-            if (index == $worker_count and index > 0) then
+            if (index == $worker_count) then
+                node.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-master-isolation.sh" if ($worker_count == 0)
                 node.vm.provision "shell", inline: "bash /vagrant/scripts/k8s-dashboard.sh"
             end
         end
