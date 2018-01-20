@@ -14,5 +14,5 @@ kubectl create -f deploy/kube-config/rbac/heapster-rbac.yaml
 
 # Change ClusterIP to NodePort
 kubectl patch svc monitoring-grafana -n kube-system --patch '{"spec": {"type": "NodePort"}}'
-kubectl get svc -n kube-system monitoring-grafana -ojson \ 
-	|jq '.spec.ports[].nodePort | tostring | "Grafana URL: http://:'${IPADDR}':" + .'
+kubectl get svc -n kube-system monitoring-grafana -ojson \
+    | jq '.spec.ports[].nodePort | tostring | "Grafana URL: http://'${IPADDR}':" + .'
