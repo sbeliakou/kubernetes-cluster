@@ -28,6 +28,8 @@ $ vagrant destroy
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
 - [x] Ingress Controller
+- [ ] Storages / GlusterFS
+- [ ] RBAC
 - [ ] Applications Deployment
 - [ ] Helm Tiller
 - [ ] Prometheus
@@ -56,6 +58,10 @@ $ vagrant destroy
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 - https://github.com/kubernetes/ingress-gce/blob/master/BETA_LIMITATIONS.md#glbc-beta-limitations
 - https://github.com/kubernetes/ingress-nginx/tree/master/deploy
+
+### Kubernetes Storage
+- https://kubernetes.io/docs/concepts/storage/volumes/
+- https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
 ### Kubernetes Tutorials
 - https://kubernetes.io/docs/tutorials/
