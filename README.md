@@ -40,6 +40,7 @@ $ vagrant destroy
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
 - https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/architecture.md
 - https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/clustering.md
+- https://kubernetes.io/docs/concepts/architecture/cloud-controller/
 
 ### Basic Installation and Configuration
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
