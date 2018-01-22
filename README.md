@@ -36,6 +36,11 @@ $ vagrant destroy
 
 ## Used Documentation
 
+### Kubernetes Architecture
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
+- https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/architecture.md
+- https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/clustering.md
+
 ### Basic Installation and Configuration
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
