@@ -40,6 +40,7 @@ $ vagrant destroy
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
 - https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/architecture.md
 - https://github.com/kubernetes/kubernetes/blob/release-1.5/docs/design/clustering.md
+- https://kubernetes.io/docs/concepts/overview/components/
 - https://kubernetes.io/docs/concepts/architecture/cloud-controller/
 
 ### Basic Installation and Configuration
@@ -47,9 +48,12 @@ $ vagrant destroy
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 - https://kubernetes.io/docs/setup/independent/troubleshooting-kubeadm/
 
-### A Pod Network (Flannel)
+### A Pod Network Addon (Flannel)
 - https://github.com/coreos/flannel
 - https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+
+### A Pod Network Addon (Weave)
+- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/
 
 ### Kubernetes Dashboard
 - https://github.com/kubernetes/dashboard
@@ -83,3 +87,36 @@ $ vagrant destroy
 - [VirtualBox NAT Interface](Vagrantfile#L21)
 - [VirtualBox CPU Usage](Vagrantfile#L22)
 - [Flannel + VirtualBox](configs/kube-flannel.yaml#L111)
+
+## Kubectl Cheatsheet
+
+```
+$ kubectl cluster-info
+$ kubectl cluster-info dump
+
+$ kubectl get nodes
+$ kubectl get pods
+$ kubectl get rc
+
+$ kubectl run nginx-deployment --image=nginx --port=80
+$ kubectl expose deployment nginx-deployment --port=80 --type=NodePort 
+
+$ kubectl expose deployment nginx-deployment --external-ip="192.168.56.150" --port=8000 --target-port=80
+$ kubectl get svc nginx-deployment 
+$ kubectl get svc nginx-deployment -o go-template='{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}'
+$ kubectl get deployment nginx
+$ kubectl describe deployment nginx-deployment
+
+$ kubectl run nginx-deployment --image=nginx --port=80 --replicas=1
+$ kubectl run nginx-deployment --image=nginx --port=80 --replicas=1 --hostport=8001
+$ kubectl scale --replicas=10 deployment nginx-deployment
+
+$ kubeadm init --token=102952.1a7dd4cc8d1f4cc5 --kubernetes-version v1.8.0
+$ kubeadm token list
+$ kubeadm join --token 102952.1a7dd4cc8d1f4cc5 172.17.0.43:6443
+
+$ kubectl apply -f https://git.io/weave-kube
+$ $ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+$ kubectl get pod -n kube-system
+
+```
