@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 
             # Provision all services once the last worker is done
             if (index == $worker_count) then
-                # Master Isolation
+                # Master Isolation, if worker_count == 0
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-master-isolation.sh" if ($worker_count == 0)
                 # Kubernetes Dashboard
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
                 # Ingress Controller
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-ingress.sh %s" % workerIP(0)
-                # Grafana + InfluxDB
+                # Grafana + InfluxDB, , if grafana == true
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-grafana.sh %s" % workerIP(0) if ($grafana)
             end
