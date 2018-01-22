@@ -24,13 +24,13 @@ $ vagrant destroy
 - Master + Workers (worker_count > 0)
 - Master Isolation (worker_count = 0)
 
-## Deployed Applications/Services
+## TODO List
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
 - [x] Ingress Controller
 - [ ] Storages / GlusterFS
 - [ ] RBAC
-- [ ] Applications Deployment
+- [ ] Applications Deployments
 - [ ] Helm Tiller
 - [ ] Prometheus
 
