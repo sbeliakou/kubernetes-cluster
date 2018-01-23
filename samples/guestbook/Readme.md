@@ -46,10 +46,6 @@ The YAML defines the name of the replication controller, redis-master, and the p
 
 ```
 $ kubectl create -f redis-master-service.yaml
-```
-
-List & Describe Services
-```
 $ kubectl get services
 $ kubectl describe services redis-master
 ```
@@ -64,10 +60,6 @@ In this case, we'll be launching two instances of the pod using the image `kuber
 
 ```
 $ kubectl create -f redis-slave-controller.yaml
-```
-
-List Replication Controllers
-```
 $ kubectl get rc
 ```
 
@@ -90,10 +82,6 @@ The YAML defines a service called frontend that uses the image kubernetes/exampl
 
 ```
 $ kubectl create -f frontend-controller.yaml
-```
-
-List controllers and pods
-```
 $ kubectl get rc
 $ kubectl get pods
 ```
@@ -108,9 +96,9 @@ With the data services started we can now deploy the web application. The patter
 The YAML defines a service called frontend that uses the image kubernetes/example-guestbook-php-redis:v2. The replication controller will ensure that three pods will always exist.
 
 ```
-kubectl create -f frontend-controller.yaml
-kubectl get rc
-kubectl get pods
+$ kubectl create -f frontend-controller.yaml
+$ kubectl get rc
+$ kubectl get pods
 ```
 
 ### PHP Code
