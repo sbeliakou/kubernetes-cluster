@@ -36,9 +36,9 @@ Vagrant.configure("2") do |config|
                 # Kubernetes Dashboard
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-dashboard.sh"
-                # Ingress Controller
+                # Ingress Controller, if $ingress_controller
                 node.vm.provision "shell", 
-                    inline: "bash /vagrant/scripts/k8s-ingress.sh %s" % workerIP(0)
+                    inline: "bash /vagrant/scripts/k8s-ingress.sh %s" % workerIP(0) if ($ingress_controller)
                 # Grafana + InfluxDB, , if grafana == true
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-grafana.sh %s" % workerIP(0) if ($grafana)

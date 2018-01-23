@@ -8,3 +8,5 @@ $worker_count = 0
 $worker_memory = 1536
 # Add Grafana with InfluxDB (work with heapster)
 $grafana = true
+# Deploy Ingress Controller
+$ingress_controller = true
