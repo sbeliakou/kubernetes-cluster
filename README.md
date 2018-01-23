@@ -1,7 +1,7 @@
 # Local Kubernetes Environment on Vagrant/Virtualbox and CentOS 7
 
 ## Kubernetes Architecture
-
+![Kubernetes High-Level Diagram](images/basic-architecture.png)
 ![Kubernetes Architecture](images/architecture.png)
 
 ## HOW TO
