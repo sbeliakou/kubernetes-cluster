@@ -1,0 +1,1 @@
+Taken from https://www.katacoda.com/courses/kubernetes
