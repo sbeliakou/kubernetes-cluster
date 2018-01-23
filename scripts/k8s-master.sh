@@ -3,6 +3,8 @@
 IPADDR=$1
 TOKEN=$2
 
+yum install -y etcd
+
 if [ ! -e /etc/kubernetes/kubelet.conf ]; then
     echo kubeadm init --apiserver-advertise-address ${IPADDR} --token ${TOKEN} --pod-network-cidr 10.244.0.0/16
     kubeadm init \
