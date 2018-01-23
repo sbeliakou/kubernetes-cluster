@@ -1,5 +1,9 @@
 # Local Kubernetes Environment on Vagrant/Virtualbox and CentOS 7
 
+## Kubernetes Architecture
+
+![Kubernetes Architecture](images/architecture.png)
+
 ## HOW TO
 - [Config File](config.rb)
 - [Vagrantfile](Vagrantfile)
