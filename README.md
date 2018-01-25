@@ -54,8 +54,8 @@ $ vagrant destroy
 
 ### A Pod Network Addon (CNI)
 - [Flannel](https://github.com/coreos/flannel)
-- [Flannel Vagrant Settings]https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
-- [Weave]https://www.weave.works/docs/net/latest/kubernetes/kube-addon/
+- [Flannel Vagrant Settings](https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant)
+- [Weave](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/)
 
 ### Kubernetes Objects (Kinds) and Operations
 Primitives:
