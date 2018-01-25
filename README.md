@@ -52,12 +52,25 @@ $ vagrant destroy
 - https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 - https://kubernetes.io/docs/setup/independent/troubleshooting-kubeadm/
 
-### A Pod Network Addon (Flannel)
-- https://github.com/coreos/flannel
-- https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+### A Pod Network Addon (CNI)
+- [Flannel](https://github.com/coreos/flannel)
+- [Flannel Vagrant Settings]https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
+- [Weave]https://www.weave.works/docs/net/latest/kubernetes/kube-addon/
 
-### A Pod Network Addon (Weave)
-- https://www.weave.works/docs/net/latest/kubernetes/kube-addon/
+### Kubernetes Objects (Kinds) and Operations
+Primitives:
+
+- [Pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)
+- [Assigning Pods to Nodes](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/)
+
+Controllers:
+
+- [ReplicationController](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/)
+- [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
+- [HorizontalPodAutoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+- [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+- [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+- [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
 
 ### Kubernetes Dashboard
 - https://github.com/kubernetes/dashboard
