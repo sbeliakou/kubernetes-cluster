@@ -72,6 +72,12 @@ Controllers:
 - [StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
 - [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
 
+Volumes:
+
+- [PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+- [PersistentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
+- [PV/PVC Walkthrough](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+
 ### Kubernetes Dashboard
 - https://github.com/kubernetes/dashboard
 - https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
@@ -85,6 +91,7 @@ Controllers:
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 - https://github.com/kubernetes/ingress-gce/blob/master/BETA_LIMITATIONS.md#glbc-beta-limitations
 - https://github.com/kubernetes/ingress-nginx/tree/master/deploy
+- https://github.com/nginxinc/kubernetes-ingress/blob/master/examples/multiple-ingress-controllers/README.md
 
 ### Kubernetes Storage
 - https://kubernetes.io/docs/concepts/storage/volumes/
