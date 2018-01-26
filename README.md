@@ -121,6 +121,9 @@ $ kubectl cluster-info dump
 $ kubectl get nodes
 $ kubectl get pods
 $ kubectl get rc
+$ kubectl get deploy
+$ kubectl get rs
+$ kubectl rollout status deploy DEPLOY_NAME
 
 $ kubectl run nginx-deployment --image=nginx --port=80
 $ kubectl expose deployment nginx-deployment --port=80 --type=NodePort 
@@ -142,5 +145,8 @@ $ kubeadm join --token 102952.1a7dd4cc8d1f4cc5 172.17.0.43:6443
 $ kubectl apply -f https://git.io/weave-kube
 $ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 $ kubectl get pod -n kube-system
+
+$ kubectl exec -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}') cat /etc/nginx/nginx.conf
+$ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}')
 
 ```

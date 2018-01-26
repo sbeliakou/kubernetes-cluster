@@ -1,9 +1,9 @@
 ## Typical Application Configuration
 
-```
-    [ ingress]
-```
 
+```
+    internet -> [ ingress-controller ] -> [ service ] -> [ pods ]
+```
 
 ```
 $ kubectl apply -f /vagrant/samples/application/application.yaml
@@ -39,6 +39,18 @@ NAME                                       READY     STATUS    RESTARTS   AGE
 default-http-backend-55c6c69b88-n7h4h      1/1       Running   1          2d
 nginx-ingress-controller-f8bdfcb68-xmkn5   1/1       Running   0          21m
 
-$ kubectl exec -n ingress-nginx -ti nginx-ingress-controller-f8bdfcb68-xmkn5 cat /etc/nginx/nginx.conf
+$ kubectl exec -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}') cat /etc/nginx/nginx.conf
+
+$ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}')
+
 $ curl -H "Host: web-application.kubernetes.example" 192.168.56.150
+```
+
+```
+kubectl apply -f nginx.yaml --record
+kubectl get deploy
+kubectl rollout status deploy nginx
+kubectl get rs
+kubectl get pods -o wide
+kubectl describe deploy/nginx
 ```
