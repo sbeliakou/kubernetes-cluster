@@ -29,16 +29,24 @@ $ vagrant destroy
 - Master Isolation (worker_count = 0)
 
 ## TODO List
+
+### Fundamental
 - [x] Kubernetes Dashboard
 - [x] Grafana + InfluxDB
 - [x] Ingress Controller
+
+### Configuration Samples and Keynotes
+- [x] Application (Deployment, Service, Ingress Rules)
+- [x] Networking (ClusterIP, ExternalIP, NodePort)
+- [x] Users
+- [ ] Secrets
+- [ ] ConfigMap
 - [ ] Storages / GlusterFS
 - [ ] RBAC
-- [ ] Applications Deployments
 - [ ] Helm Tiller
 - [ ] Prometheus
 
-## Used Documentation
+## Documentation References
 
 ### Kubernetes Architecture
 - https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/architecture.md
@@ -113,7 +121,6 @@ Volumes:
 - [Flannel + VirtualBox](configs/kube-flannel.yaml#L111)
 
 ## Kubectl Cheatsheet
-
 ```
 $ kubectl cluster-info
 $ kubectl cluster-info dump
@@ -148,5 +155,8 @@ $ kubectl get pod -n kube-system
 
 $ kubectl exec -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep controller | awk '{print $1}') cat /etc/nginx/nginx.conf
 $ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep controller | awk '{print $1}')
+
+
+$ kubectl run cent --image=sbeliakou/centos --command sleep 3600
 
 ```
