@@ -7,6 +7,9 @@ end
 image = 'sbeliakou/centos'
 
 Vagrant.configure("2") do |config|
+    # Basic OS Configuration
+    config.vm.provision "shell", inline: "bash /vagrant/scripts/base.sh"
+
     (0..$worker_count).each do |index|
         node_name = (index == 0) ? "k8s-master" : "k8s-worker-%d" % index
 
@@ -42,10 +45,10 @@ Vagrant.configure("2") do |config|
                 # Grafana + InfluxDB, , if grafana == true
                 node.vm.provision "shell", 
                     inline: "bash /vagrant/scripts/k8s-grafana.sh %s" % workerIP(0) if ($grafana)
+
+                # Just Cluster Info
+                node.vm.provision "shell", inline: "kubectl cluster-info", run: "always"
             end
         end
     end
-
-    # OS Basic Configuration
-    config.vm.provision "shell", inline: "bash /vagrant/scripts/base.sh"
 end
