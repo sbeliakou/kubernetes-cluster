@@ -36,6 +36,13 @@ spec:
     targetPort: http-port
   selector:
     app: web-application
+
+  # Disable Walking across Backends
+  #
+  # sessionAffinity: ClientIP
+  # sessionAffinityConfig:
+  #   clientIP:
+  #     timeoutSeconds: 100
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
