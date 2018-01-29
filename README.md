@@ -146,7 +146,7 @@ $ kubectl apply -f https://git.io/weave-kube
 $ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 $ kubectl get pod -n kube-system
 
-$ kubectl exec -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}') cat /etc/nginx/nginx.conf
-$ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep nginx-ingress-controller | awk '{print $1}')
+$ kubectl exec -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep controller | awk '{print $1}') cat /etc/nginx/nginx.conf
+$ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep controller | awk '{print $1}')
 
 ```
