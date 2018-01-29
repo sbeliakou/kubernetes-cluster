@@ -1,18 +1,18 @@
 ## Demo Stacks:
-- [GuestBook Application](samples/guestbook/)
+- [GuestBook Application](guestbook/)
 
 ## Networking
-- [Sample Manifests](samples/networking)
+- [Sample Manifests](networking)
 
 ## Stateless Demo Manifests
-- [Application](samples/application/)
-- [Ingress Routing](samples/ingress_routing/)
+- [Application](application/)
+- [Ingress Routing](ingress_routing/)
 
 ## Stateful Demo Manifests
-- [Statefull](samples/stateful_services/)
+- [Statefull](stateful_services/)
 
 ## User Demo Manifest
-- [Jenkins User](samples/user-management)
+- [Jenkins User](user-management)
 
 ## Secrets
 
