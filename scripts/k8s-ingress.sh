@@ -14,6 +14,6 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/mast
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
 
-kubectl patch svc ingress-nginx -n ingress-nginx  --patch '{ "spec": {"externalIPs": [ "'${IPADDR}'" ] }}'
+kubectl patch svc ingress-nginx -n ingress-nginx --patch '{ "spec": {"externalIPs": [ "'${IPADDR}'" ] }}'
 
 kubectl get pods -n ingress-nginx 
