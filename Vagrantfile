@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
                     inline: "bash /vagrant/scripts/k8s-grafana.sh %s" % workerIP(0) if ($grafana)
 
                 # Just Cluster Info
-                node.vm.provision "shell", inline: "kubectl cluster-info", run: "always"
+                node.vm.provision "shell", inline: "sleep 5; kubectl cluster-info", run: "always"
             end
         end
     end
