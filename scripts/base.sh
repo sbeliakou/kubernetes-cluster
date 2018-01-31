@@ -53,3 +53,14 @@ systemctl enable kubelet
 echo "Disabling SWAP"
 sed -i 's/[^#]\(.*swap.*\)/# \1/' /etc/fstab
 swapoff --all
+
+
+# yum install -y dnsmasq
+# cat <<EOF > /etc/dnsmasq.d/10-kub-dns
+# server=/svc.cluster.local/10.96.0.10#53
+# listen-address=127.0.0.1
+# bind-interfaces
+# EOF
+
+# systemctl start dnsmasq
+# systemctl enable dnsmasq
