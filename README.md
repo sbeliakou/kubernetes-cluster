@@ -9,6 +9,10 @@
 - [Vagrantfile](Vagrantfile)
 
 ```
+$ make up
+$ make down
+$ make destroy
+
 $ vagrant up
 $ vagrant ssh k8s-master
 $ vagrant ssh k8s-worker-1 # k8s-worker-{N}
@@ -53,7 +57,7 @@ $ vagrant destroy
 - [ ] Storages / GlusterFS
 - [ ] RBAC
 - [ ] Helm Tiller
-- [ ] Prometheus
+- [x] Prometheus
 
 ## Documentation References
 
@@ -167,5 +171,6 @@ $ kubectl logs -n ingress-nginx $(kubectl get pods -n ingress-nginx | grep contr
 
 
 $ kubectl run cent --image=sbeliakou/centos --command sleep 3600
+$ dig @10.96.0.10 grafana.monitoring.svc.cluster.local
 
 ```
