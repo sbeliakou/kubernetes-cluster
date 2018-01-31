@@ -4,17 +4,15 @@ def workerIP(num)
   return "192.168.56.#{num+150}"
 end
 
-image = 'sbeliakou/centos'
-
 Vagrant.configure("2") do |config|
-    # Basic OS Configuration
-    config.vm.provision "shell", inline: "bash /vagrant/scripts/base.sh"
+    config.vm.provision "Basic OS Provisioning", type: "shell", 
+        inline: "bash /vagrant/scripts/base.sh"
 
     (0..$worker_count).each do |index|
         node_name = (index == 0) ? "k8s-master" : "k8s-worker-%d" % index
 
         config.vm.define node_name do |node|
-            node.vm.box = image
+            node.vm.box = $image
             node.vm.hostname = node_name
             node.vm.network :private_network, ip: workerIP(index)
 
@@ -26,28 +24,30 @@ Vagrant.configure("2") do |config|
             end
 
             # Master/Worker Provisioning
-            node.vm.provision 'shell' do |shell|
+            node.vm.provision "Kubernetes Provisioning", type: "shell" do |shell|
                 shell.inline = "bash /vagrant/scripts/k8s-#{(index == 0) ? 'master' : 'worker'}.sh $1 $2"
                 shell.args = [workerIP(0), $token]
             end
 
             # Provision all services once the last worker is done
             if (index == $worker_count) then
-                # Master Isolation, if worker_count == 0
-                node.vm.provision "shell", 
+                node.vm.provision "Master Isolation", type: "shell",  
                     inline: "bash /vagrant/scripts/k8s-master-isolation.sh" if ($worker_count == 0)
-                # Kubernetes Dashboard
-                node.vm.provision "shell", 
+
+                node.vm.provision "Kubernetes Dashboard", type: "shell",
                     inline: "bash /vagrant/scripts/k8s-dashboard.sh"
-                # Ingress Controller, if $ingress_controller
-                node.vm.provision "shell", 
+
+                node.vm.provision "Ngix Ingress Controller", type: "shell",
                     inline: "bash /vagrant/scripts/k8s-ingress.sh %s" % workerIP(0) if ($ingress_controller)
-                # Grafana + InfluxDB, , if grafana == true
-                node.vm.provision "shell", 
+
+                node.vm.provision "Grafana + InfluxDB Monitoring", type: "shell",
                     inline: "bash /vagrant/scripts/k8s-grafana.sh %s" % workerIP(0) if ($grafana)
 
-                # Just Cluster Info
-                node.vm.provision "shell", inline: "sleep 5; kubectl cluster-info", run: "always"
+                node.vm.provision "Prometheus Monitoring", type: "shell",
+                    inline: "bash /vagrant/scripts/k8s-prometheus.sh %s" % $domain if ($prometheus)
+
+                node.vm.provision "Cluster Info", type: "shell", 
+                    inline: "sleep 5; kubectl cluster-info", run: "always"
             end
         end
     end
