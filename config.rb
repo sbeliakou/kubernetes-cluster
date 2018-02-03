@@ -1,7 +1,5 @@
-# VBox Image
-$image = "sbeliakou/centos"
 # If you change, Keep the structure with the dot. [0-9 a-f]
-$token = "56225f.9096af3559800a6a"
+$token = "12345f.0123456789abcdef"
 # Total memory of master
 $master_memory = 2560
 # Increment to have more nodes
