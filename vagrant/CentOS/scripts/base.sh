@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yum install -y deltarpm
+
 echo "Updating System"
 yum update -y
 
