@@ -6,27 +6,24 @@
 
 ## HOW TO
 - [Config File](config.rb)
-- [Vagrantfile](Vagrantfile)
+- [Vagrantfile](vagrant/)
 
 ```
 $ make up
+$ make load
+$ make whoup
+$ make ssh
 $ make down
 $ make destroy
 
-$ vagrant up
-$ vagrant ssh k8s-master
-$ vagrant ssh k8s-worker-1 # k8s-worker-{N}
-
 # K8s Dashboard
-$ kubectl --kubeconfig .kube/config proxy
+$ kubectl proxy
 
 # K8s bash completion
 $ source <(kubectl completion bash)
-$ source .profile
  
 $ kubectl get nodes
 ...
-$ vagrant destroy
 ```
 
 ## Tested on:
