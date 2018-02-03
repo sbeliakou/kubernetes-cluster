@@ -117,6 +117,8 @@ Volumes:
 
 ### Kubernetes Tutorials
 - https://kubernetes.io/docs/tutorials/
+- http://katacoda.com/courses/kubernetes
+- https://www.edx.org/course/introduction-kubernetes-linuxfoundationx-lfs158x?gclid=EAIaIQobChMI06mUq96K2QIViKMYCh0B6wl9EAMYASAAEgKRFfD_BwE
 
 ### Other
 - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
