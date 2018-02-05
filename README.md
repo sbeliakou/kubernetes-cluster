@@ -128,8 +128,8 @@ Volumes:
 - http://hyperpolyglot.org/json
 
 ## Fixes & Work Arounds
-- [VirtualBox NAT Interface](Vagrantfile#L21)
-- [VirtualBox CPU Usage](Vagrantfile#L22)
+- [VirtualBox NAT Interface](vagrant/CentOS/Vagrantfile#L21)
+- [VirtualBox CPU Usage](vagrant/CentOS/Vagrantfile#L22)
 - [Flannel + VirtualBox](configs/kube-flannel.yaml#L111)
 
 ## Kubectl Cheatsheet
