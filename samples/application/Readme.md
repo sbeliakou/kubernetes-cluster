@@ -54,3 +54,32 @@ kubectl get rs
 kubectl get pods -o wide
 kubectl describe deploy/nginx
 ```
+
+## Sample Statful Application
+
+Stack: [nginx-pv](samples/application/nginx-pv.yaml)
+
+```
+$ kubectl get nodes --show-labels
+NAME           STATUS    ROLES     AGE       VERSION   LABELS
+k8s-master     Ready     master    20h       v1.9.2    beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=k8s-master,node-role.kubernetes.io/master=
+k8s-worker-1   Ready     <none>    20h       v1.9.2    beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=k8s-worker-1,team=mtp,tool=jenkins
+k8s-worker-2   Ready     <none>    20h       v1.9.2    beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/hostname=k8s-worker-2
+
+$ kubectl apply -f samples/application/nginx-pv.yaml
+namespace "devops-ns" created
+persistentvolume "web-application-pv" created
+persistentvolumeclaim "web-application-pvc" created
+deployment "web-application-deployment" created
+service "web-application-svc" created
+ingress "web-application-ingress" created
+
+$ kubectl rollout status deployment web-application-deployment -n devops-ns
+Waiting for rollout to finish: 0 of 1 updated replicas are available...
+deployment "web-application-deployment" successfully rolled out
+
+$ curl -H "Host: web-application.kubernetes.example" 192.168.56.150
+Hello from Kubernetes storage (init container)
+
+$ kubectl describe pod $(kubectl get po -n devops-ns | awk '/web-application/{print $1}') -n devops-ns
+```
