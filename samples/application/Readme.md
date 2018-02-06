@@ -57,7 +57,7 @@ kubectl describe deploy/nginx
 
 ## Sample Statful Application
 
-Stack: [nginx-pv](samples/application/nginx-pv.yaml)
+Stack: [nginx-pv](nginx-pv.yaml)
 
 ```
 $ kubectl get nodes --show-labels
