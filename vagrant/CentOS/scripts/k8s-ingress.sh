@@ -2,6 +2,20 @@
 
 # https://github.com/kubernetes/ingress-nginx/tree/master/deploy
 
+echo "Executing ${0}"
+
+echo "================================================================"
+echo 
+echo "Configuring Ingress Controller:"
+echo "  - ingress Controller Namespace"
+echo "  - default backend"
+echo "  - configmap (tcp/udp)"
+echo "  - rbac"
+echo "  - node port"
+echo "  - patch entrypoint to ${IPADDR}"
+echo 
+echo "================================================================"
+
 export IPADDR=$1
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/namespace.yaml 

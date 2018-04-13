@@ -5,11 +5,10 @@ def workerIP(num)
 end
 
 image = "sbeliakou/centos"
-scripts_dir = "/vagrant/vagrant/CentOS/scripts/"
 
 Vagrant.configure("2") do |config|
-    config.vm.provision "Basic OS Provisioning", type: "shell", 
-        inline: "bash #{scripts_dir}/base.sh"
+    # config.vm.provision "Basic OS Provisioning", type: "shell", 
+    #     inline: "bash #{scripts_dir}/base.sh"
 
     config.ssh.insert_key = false
     config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -32,32 +31,44 @@ Vagrant.configure("2") do |config|
                 vb.customize ["modifyvm", :id, "--cpuexecutioncap", "#{70/($worker_count+1)}"]
             end
 
-            # Master/Worker Provisioning
-            node.vm.provision "Kubernetes Provisioning", type: "shell" do |shell|
-                shell.inline = "bash #{scripts_dir}/k8s-#{(index == 0) ? 'master' : 'worker'}.sh $1 $2"
-                shell.args = [workerIP(0), $token]
-            end
+            node.vm.provision "shell", 
+                env: {
+                    "NODE_TYPE"           => "#{(index == 0) ? 'master' : 'worker'}",
+                    "NODE_INDEX"          => "#{index}",
+                    "K8S_TOKEN"           => "#{$token}",
+                    "WORKER_COUNT"        => "#{$worker_count}",
+                    "MASTER_IP"           => "#{workerIP(0)}",
+                    "DEPLOY_INGRESS_CTRL" => "#{$ingress_controller}",
+                    "DEPLOY_GRAFANA"      => "#{$grafana}",
+                    "DEPLOY_PROMETHEUS"   => "#{$prometheus}",
+                    "DOMAIN_NAME"         => "#{$domain}",
+                    "SCRIPTS_DIR"         => "/vagrant/vagrant/CentOS/scripts/",
+                    "CONFIGS_DIR"         => "/vagrant/configs/"
+                },
+                inline: <<-SHELL
+                    /bin/bash ${SCRIPTS_DIR}/base.sh
+                    /bin/bash ${SCRIPTS_DIR}/k8s-${NODE_TYPE}.sh ${MASTER_IP} ${K8S_TOKEN}
+                    
+                    if [ ${NODE_INDEX} -eq ${WORKER_COUNT} ]; then
+                        if [ ${WORKER_COUNT} -eq 0 ]; then
+                            /bin/bash ${SCRIPTS_DIR}/k8s-master-isolation.sh
+                        fi
+                        
+                        /bin/bash ${SCRIPTS_DIR}/k8s-dashboard.sh
 
-            # Provision all services once the last worker is done
-            if (index == $worker_count) then
-                node.vm.provision "Master Isolation", type: "shell",  
-                    inline: "bash #{scripts_dir}/k8s-master-isolation.sh" if ($worker_count == 0)
+                        if [ "${DEPLOY_INGRESS_CTRL}" == "true" ]; then
+                            /bin/bash ${SCRIPTS_DIR}/k8s-ingress.sh ${MASTER_IP} 
+                        fi
 
-                node.vm.provision "Kubernetes Dashboard", type: "shell",
-                    inline: "bash #{scripts_dir}/k8s-dashboard.sh"
+                        if [ "${DEPLOY_GRAFANA}" == "true" ]; then
+                            /bin/bash ${SCRIPTS_DIR}/k8s-grafana.sh ${MASTER_IP} 
+                        fi
 
-                node.vm.provision "Ngix Ingress Controller", type: "shell",
-                    inline: "bash #{scripts_dir}/k8s-ingress.sh %s" % workerIP(0) if ($ingress_controller)
-
-                node.vm.provision "Grafana + InfluxDB Monitoring", type: "shell",
-                    inline: "bash #{scripts_dir}/k8s-grafana.sh %s" % workerIP(0) if ($grafana)
-
-                node.vm.provision "Prometheus Monitoring", type: "shell",
-                    inline: "bash #{scripts_dir}/k8s-prometheus.sh %s" % $domain if ($prometheus)
-
-                node.vm.provision "Cluster Info", type: "shell", 
-                    inline: "sleep 5; kubectl cluster-info", run: "always"
-            end
+                        if [ "${DEPLOY_PROMETHEUS}" == "true" ]; then
+                            /bin/bash ${SCRIPTS_DIR}/k8s-prometheus.sh ${DOMAIN_NAME} 
+                        fi
+                    fi
+                SHELL
         end
     end
 end

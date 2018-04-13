@@ -1,5 +1,14 @@
 #!/bin/bash
 
+echo "Executing ${0}"
+
+echo "================================================================"
+echo 
+echo "Configuring Kubernetes Node:"
+echo "  - joining Node to the Cluster"
+echo 
+echo "================================================================"
+
 IPADDR=$1
 TOKEN=$2
 
@@ -8,8 +17,11 @@ if [ ! -e /etc/kubernetes/kubelet.conf ]; then
     kubeadm join --token ${TOKEN} --discovery-token-unsafe-skip-ca-verification ${IPADDR}:6443
 
     mkdir -p $HOME/.kube
-    /bin/cp -f /vagrant/.kube/config $HOME/.kube/config
-    chown $(id -u):$(id -g) $HOME/.kube/config
+    
+    if [ -e /vagrant/.kube/ ]; then
+        /bin/cp -f /vagrant/.kube/config $HOME/.kube/config
+        chown $(id -u):$(id -g) $HOME/.kube/config
+    fi
 
     while kubectl get nodes | grep $(hostname) | grep NotReady >/dev/null;
     do

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Executing ${0}"
+
 DOMAIN=$1
 
 cd /tmp/

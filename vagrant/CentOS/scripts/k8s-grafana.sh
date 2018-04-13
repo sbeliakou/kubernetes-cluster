@@ -1,6 +1,16 @@
 #!/bin/bash
 # https://github.com/kubernetes/heapster/blob/master/docs/influxdb.md 
 
+echo "Executing ${0}"
+
+echo "================================================================"
+echo 
+echo "Installing Grafana Monitoring Dashboard:"
+echo "  - influxdb"
+echo "  - heapster rbac"
+echo 
+echo "================================================================"
+
 IPADDR=$1
 
 yum install -y git
