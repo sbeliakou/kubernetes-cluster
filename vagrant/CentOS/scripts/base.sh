@@ -9,13 +9,12 @@ yum update -y
 # yum install -y nss-mdns avahi avahi-tools
 # systemctl enable avahi-daemon
 # systemctl start avahi-daemon
-echo "================================================================"
-echo 
-echo "Disabling SELINUX"
-echo 
-echo "================================================================"
 
+echo "================================================================"
+echo 
 echo "Disabling SELINUX"
+echo 
+echo "================================================================"
 getenforce | grep Disabled || setenforce 0
 echo "SELINUX=disabled" > /etc/sysconfig/selinux
 
@@ -128,6 +127,8 @@ yum install -y kubelet kubeadm kubectl kubernetes-cni
 systemctl start docker
 systemctl enable kubelet
 
+# Fix 'error: unable to upgrade connection: pod does not exist'
+sed -i "s/\(KUBELET_EXTRA_ARGS=\).*/\1--node-ip=$(ifconfig enp0s8 | sed -n '2p' | awk '{print $2}')/" /etc/sysconfig/kubelet
 
 # yum install -y dnsmasq
 # cat <<EOF > /etc/dnsmasq.d/10-kub-dns
