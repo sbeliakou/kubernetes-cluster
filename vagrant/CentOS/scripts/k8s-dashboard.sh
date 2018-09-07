@@ -22,10 +22,12 @@ fi
 
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 
+# kubectl --kubeconfig .kube/config proxy --address='0.0.0.0' --accept-hosts='^*$'
+
 cat << EOF
 For Accessing Kub Dashboard:
-    1. kubectl --kubeconfig .kube/config proxy --address='0.0.0.0' --accept-hosts='^*$'
-    2. In browser go to: http://localhost:8001/ui/
+    1. kubectl --kubeconfig .kube/config proxy
+    2. In browser go to: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
     3. Sign in with above mentioned token
     
 EOF
