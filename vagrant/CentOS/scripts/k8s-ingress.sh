@@ -1,33 +1,34 @@
 #!/bin/bash
 
-# https://github.com/kubernetes/ingress-nginx/tree/master/deploy
+cat <<END
+Executing ${0}
+================================================================================
 
-echo "Executing ${0}"
+    Installing Ingress Controller
 
-echo "================================================================"
-echo 
-echo "Configuring Ingress Controller:"
-echo "  - ingress Controller Namespace"
-echo "  - default backend"
-echo "  - configmap (tcp/udp)"
-echo "  - rbac"
-echo "  - node port"
-echo "  - patch entrypoint to ${IPADDR}"
-echo 
-echo "================================================================"
+================================================================================
 
-export IPADDR=$1
+END
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/namespace.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/default-backend.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/configmap.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/tcp-services-configmap.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/udp-services-configmap.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/rbac.yaml 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/with-rbac.yaml 
-
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
 
-kubectl patch svc ingress-nginx -n ingress-nginx --patch '{ "spec": {"externalIPs": [ "'${IPADDR}'" ] }}'
+if [ "${1}" != "true" ]; then
+    MASTER_NAME=$(kubectl get nodes | grep master | head -1 | cut -d' ' -f1)
+    IPADDR=$(kubectl get node ${MASTER_NAME} -o go-template --template '{{range .status.addresses}}{{if (eq .type "InternalIP")}}{{.address}}{{end}}{{end}}')
+    kubectl patch svc ingress-nginx -n ingress-nginx --patch '{ "spec": {"externalIPs": [ "'${IPADDR}'" ] }}'
+else
+    kubectl patch -n ingress-nginx svc ingress-nginx --patch '{"spec": {"type": "LoadBalancer"}}'
+fi
 
-kubectl get pods -n ingress-nginx 
+# # Wait until Ingress Controller is Ready
+# phase=$(kubectl get pod $(kubectl get pod -n ingress-nginx | grep nginx-ingress-controller | cut -d' ' -f1) -n ingress-nginx -o template --template='{{.status.phase}}')
+# while [ "${phase}" == "Pending" ]
+# do
+#   phase=$(kubectl get pod $(kubectl get pod -n ingress-nginx | grep nginx-ingress-controller | cut -d' ' -f1) -n ingress-nginx -o template --template='{{.status.phase}}')
+#   echo $(date +"[%H:%M:%S]") Nginx Ingress Controller not Ready
+#   sleep 10
+# done
+
+kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx

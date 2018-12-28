@@ -2,14 +2,21 @@
 
 bash /vagrant/vagrant/CentOS/scripts/helm.sh
 
-echo "Executing ${0}"
+cat <<END
+Executing ${0}
+================================================================================
 
-echo "==== Deploying Prometheus Operator ===="
+    Deploying Prometheus
+
+================================================================================
+
+END
+
 helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
 helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring
 helm install coreos/kube-prometheus --name kube-prometheus --namespace monitoring
 
-kubectl -n monitoring apply -f /vagrant/configs/prometheus.yaml
+# kubectl -n monitoring apply -f /vagrant/configs/prometheus.yaml
 
 # cd /opt/prometheus-operator/helm
 # helm install helm/prometheus-operator --name prometheus-operator --namespace monitoring
