@@ -8,14 +8,18 @@ Executing ${0}
 
     Configuring Kubernetes Master in Isolation Mode:
       - taint all nodes to Master
-      - adding node-role label: "node"
+      - setting node-role: "node"
 
 ================================================================================
 
 END
 
-if [ ! -e /etc/kubernetes/.masterisolation ]; then
+node_status=$(kubectl get nodes ${HOSTNAME} -o yaml | grep node-role.kubernetes.io/node >/dev/null; echo $?)
+
+if [ ${node_status} -ne 0 ]; then
 	kubectl taint nodes --all node-role.kubernetes.io/master-
   kubectl patch node ${HOSTNAME} --patch='{"metadata": {"labels": {"node-role.kubernetes.io/node": ""}}}'
-	touch /etc/kubernetes/.masterisolation
+  echo Node Role is Assigned to ${HOSTNAME}
+else
+  echo Node Role is Already Assigned to ${HOSTNAME}
 fi
