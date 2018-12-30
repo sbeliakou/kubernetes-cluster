@@ -5,6 +5,8 @@ bash /vagrant/vagrant/CentOS/scripts/helm.sh
 cat <<END
 ================================================================================
 
+    https://github.com/coreos/prometheus-operator/tree/master/helm
+
     Deploying Prometheus:
         - prometheus-operator
         - kube-prometheus
