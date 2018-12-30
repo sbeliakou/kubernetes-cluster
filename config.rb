@@ -5,7 +5,7 @@ $token = "abcdef.0123456789abcdef"
 $master_memory = 2560
 
 # Increment to have more nodes
-$worker_count = 1
+$worker_count = 0
 
 # Total memory of nodes
 $worker_memory = 1536
