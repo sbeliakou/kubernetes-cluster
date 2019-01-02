@@ -4,6 +4,9 @@ cat <<END
 Executing ${0}
 ================================================================================
 
+    https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md
+    https://kubernetes.github.io/ingress-nginx/deploy/#bare-metal
+    
     Installing Ingress Controller
 
 ================================================================================
