@@ -21,7 +21,7 @@ $metallb_ips = "192.168.56.240/28"
 $metallb = true
 
 # Deploy Ingress Controller
-$ingress_controller = true
+$ingress_controller = "istio"
 
 # Deploy Prometheus
 $prometheus = true

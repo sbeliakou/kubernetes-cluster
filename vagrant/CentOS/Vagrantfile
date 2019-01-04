@@ -65,10 +65,19 @@ Vagrant.configure("2") do |config|
                     ]
                 end
 
-                if $ingress_controller
+                if $ingress_controller == "nginx"
                     node.vm.provision "shell", 
-                        name: "Nginx Ingress Controller (scripts/k8s-ingress.sh)",
-                        path: "scripts/k8s-ingress.sh",
+                        name: "Nginx Ingress Controller (scripts/k8s-ingress-nginx.sh)",
+                        path: "scripts/k8s-ingress-nginx.sh",
+                        args: [
+                            "#{$metallb}"
+                        ]
+                end
+
+                if $ingress_controller == "istio"
+                    node.vm.provision "shell", 
+                        name: "Nginx Ingress Controller (scripts/k8s-ingress-istio.sh)",
+                        path: "scripts/k8s-ingress-istio.sh",
                         args: [
                             "#{$metallb}"
                         ]
