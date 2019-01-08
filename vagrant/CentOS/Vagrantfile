@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
                 vb.name = node_name
                 vb.memory = (index == 0) ? $master_memory : $worker_memory
                 vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-                vb.customize ["modifyvm", :id, "--cpuexecutioncap", "#{60/($worker_count+1)}"]
+                vb.customize ["modifyvm", :id, "--cpuexecutioncap", "#{70/($worker_count+1)}"]
             end
 
             node.vm.provision "shell", 
