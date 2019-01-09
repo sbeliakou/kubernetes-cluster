@@ -2,7 +2,7 @@
 $token = "abcdef.0123456789abcdef"
 
 # Total memory of master
-$master_memory = 2560
+$master_memory = 6000
 
 # Increment to have more nodes
 $worker_count = 0
@@ -24,4 +24,4 @@ $metallb = true
 $ingress_controller = "istio"
 
 # Deploy Prometheus
-$prometheus = true
+$prometheus = false
