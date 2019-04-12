@@ -1,4 +1,4 @@
-.PHONY: ssh 
+.PHONY: ssh
 
 ifeq (ssh, $(firstword $(MAKECMDGOALS)))
   vmbox := $(word 2, $(MAKECMDGOALS))
@@ -10,7 +10,7 @@ base = "CentOS"
 help:
 	@echo 'Usage:'
 	@echo '  make <target> [base=CentOS|CoreOS]'
-	@echo 
+	@echo
 	@echo 'Targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo
@@ -24,7 +24,7 @@ status:      ## Get Cluster Status
 load:        ## Load KUBECONFIG for the Cluster
 	@KUBECONFIG=$(shell pwd)/.kube/config bash
 
-create: 
+create:
 	@cd vagrant/$(base) && vagrant up
 
 up: create load    ## Up Cluster
@@ -47,3 +47,6 @@ who: whoup
 
 ssh:         ## SSH Jump Into VM
 	@cd vagrant/$(base) && vagrant ssh $(vmbox)
+
+info:
+	@ruby -r ipaddr -e 'load "config.rb"; print("Nodes IPs: \n"); (0..$$worker_count).each { |i| print("  ", (i == 0) ? "k8s-master" : "k8s-worker-%d" % i, "\t", (IPAddr.new $$cluster_ips)|(1+i), "\n")}; print("\nCluster IPs: ", $$metallb_ips, "\n")'
