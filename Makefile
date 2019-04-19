@@ -49,4 +49,4 @@ ssh:         ## SSH Jump Into VM
 	@cd vagrant/$(base) && vagrant ssh $(vmbox)
 
 info:
-	@ruby -r ipaddr -e 'load "config.rb"; print("Nodes IPs: \n"); (0..$$worker_count).each { |i| print("  ", (i == 0) ? "k8s-master" : "k8s-worker-%d" % i, "\t", (IPAddr.new $$cluster_ips)|(1+i), "\n")}; print("\nCluster IPs: ", $$metallb_ips, "\n")'
+	@ruby -r ipaddr -e 'load "config.rb"; print("Nodes: \n"); (0..$$worker_count).each { |i| print("  ", (i == 0) ? "k8s-master" : "k8s-worker-%d" % i, "\t  ", (IPAddr.new $$cluster_ips)|(1+i), "\n")}; print("\nLoadBalancers: ", $$metallb_ips, "\n")'
