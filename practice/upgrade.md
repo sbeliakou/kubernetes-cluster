@@ -73,7 +73,6 @@ $ kubectl get nodes
 NAME           STATUS   ROLES    AGE   VERSION
 k8s-master     Ready    master   27m   v1.14.3
 k8s-worker-1   Ready    node     22m   v1.13.7
-k8s-worker-2   Ready    node     16m   v1.13.7
 ```
 
 
@@ -114,7 +113,7 @@ $ systemctl restart kubelet
 5. Uncordon the node
 ```
 $ kubectl uncordon $HOSTNAME
-$ node/k8s-worker-1 uncordoned
+node/k8s-worker-1 uncordoned
 ```
 
 6. Checking
@@ -123,4 +122,3 @@ $ kubectl get nodes
 NAME           STATUS   ROLES    AGE   VERSION
 k8s-master     Ready    master   27m   v1.14.3
 k8s-worker-1   Ready    node     22m   v1.13.7
-k8s-worker-2   Ready    node     16m   v1.13.7
