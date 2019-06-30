@@ -121,4 +121,4 @@ node/k8s-worker-1 uncordoned
 $ kubectl get nodes
 NAME           STATUS   ROLES    AGE   VERSION
 k8s-master     Ready    master   27m   v1.14.3
-k8s-worker-1   Ready    node     22m   v1.13.7
+k8s-worker-1   Ready    node     22m   v1.14.3
