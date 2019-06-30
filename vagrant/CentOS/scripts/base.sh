@@ -9,6 +9,7 @@ Executing ${0}
       - wget
       - ntp
       - jq
+      - git
       - net-tools
       - bind-utils
       - moreutils
@@ -19,7 +20,7 @@ END
 
 yum install -y deltarpm
 yum update  -y
-yum install -y epel-release wget ntp jq net-tools bind-utils moreutils
+yum install -y epel-release wget ntp jq git net-tools bind-utils moreutils
 
 # yum install -y nss-mdns avahi avahi-tools
 # systemctl enable avahi-daemon
@@ -157,7 +158,12 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 
-yum install -y kubelet kubeadm kubectl kubernetes-cni 
+
+if [ -n "${K8SVERSION}" ]; then
+  yum install -y kubelet-${K8SVERSION} kubeadm-${K8SVERSION} kubectl-${K8SVERSION} kubernetes-cni 
+else
+  yum install -y kubelet kubeadm kubectl kubernetes-cni 
+fi
 
 systemctl start docker
 systemctl enable kubelet
