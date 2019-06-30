@@ -17,6 +17,7 @@ yum install -y git
 
 cd /tmp/
 git clone https://github.com/nginxinc/kubernetes-ingress.git
+git checkout v1.5.0
 cd kubernetes-ingress/deployments
 
 kubectl apply -f common/ns-and-sa.yaml
