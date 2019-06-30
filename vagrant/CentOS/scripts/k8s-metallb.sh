@@ -4,9 +4,9 @@ cat <<END
 Executing ${0}
 ================================================================================
 
-    https://metallb.universe.tf/installation/
-
     Installing Metal LB
+
+    - https://metallb.universe.tf/installation/
 
 ================================================================================
 
