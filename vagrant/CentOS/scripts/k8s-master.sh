@@ -42,7 +42,24 @@ if [ ! -e /etc/kubernetes/kubelet.conf ]; then
     # https://github.com/coreos/flannel/blob/master/Documentation/troubleshooting.md#vagrant
     IPETHX=$(ip r | grep $(hostname -I | sed 's/10.0.2.15//' | awk '{print $1}') | cut -d' ' -f3)
     kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
-    kubectl patch daemonsets kube-flannel-ds-amd64 -n kube-system --patch='{"spec":{"template":{"spec":{"containers":[{"name": "kube-flannel", "args": ["--ip-masq", "--kube-subnet-mgr", "--iface='${IPETHX}'"]}]}}}}'
+    kubectl patch daemonsets kube-flannel-ds-amd64 -n kube-system --patch '{
+        "spec": {
+            "template": {
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "kube-flannel", 
+                            "args": [
+                                "--ip-masq",
+                                "--kube-subnet-mgr",
+                                "--iface='${IPETHX}'"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }'
 
     kubectl get daemonsets -n kube-system kube-flannel-ds-amd64
 
