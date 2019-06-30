@@ -26,24 +26,15 @@ $ kubectl get nodes
 ...
 ```
 
-## Tested on:
-- VirtualBox 5.2.6
-- Vagrant 2.0.1
-- CentOS 7.4
-- Docker 1.12.6
-- Kubernetes 1.9.2
-- Flannel 0.9.1
-
-## Supported Configurations
-- Master + Workers (worker_count > 0)
-- Master Isolation (worker_count = 0)
-
-## TODO List
-
-### Fundamental
-- [x] Kubernetes Dashboard
-- [x] Grafana + InfluxDB
-- [x] Ingress Controller
+## Cluster Configuration
+- [X] Docker 18.09
+- [X] Kubernetes (multiple versions: [configuration](config.rb#L14))
+- [X] Master + Workers (worker_count > 0) / Master Isolation (worker_count = 0), [configuration](config.rb#L8)
+- [X] MetalLB (Pluggable)
+- [X] Metrics-Server
+- [X] Kuebernetes Dashboard
+- [X] Flannel
+- [X] Nginx Ingress-Controller
 
 ### Configuration Samples and Keynotes
 - [x] Application (Deployment, Service, Ingress Rules)
