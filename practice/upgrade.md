@@ -85,7 +85,7 @@ $ yum install -y kubeadm-1.14.3
 
 2. Prepare the node for maintenance by marking it unschedulable and evicting the workloads
 ```
-$ kubectl drain $HOSTNAME --ignore-daemonsets --delete-local-data
+$ kubectl drain k8s-worker-1 --ignore-daemonsets --delete-local-data
 node/k8s-worker-1 cordoned
 WARNING: Ignoring DaemonSet-managed pods: kube-flannel-ds-amd64-d29pz, kube-proxy-cj657, speaker-brtfk; Deleting pods with local storage: kubernetes-dashboard-57df4db6b-kl7mm
 pod/coredns-fb8b8dccf-jcvc4 evicted
@@ -112,7 +112,7 @@ $ systemctl restart kubelet
 
 5. Uncordon the node
 ```
-$ kubectl uncordon $HOSTNAME
+$ kubectl uncordon k8s-worker-1
 node/k8s-worker-1 uncordoned
 ```
 
