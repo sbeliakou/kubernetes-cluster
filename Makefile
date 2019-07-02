@@ -46,7 +46,7 @@ whoup:       ## Show Running VMs
 who: whoup
 
 ssh:         ## SSH Jump Into VM
-	@cd vagrant/$(base) && vagrant ssh $(vmbox)
+	cd vagrant/$(base) && vagrant ssh $(shell /usr/bin/env ruby vagrant/$(base)/names.rb $(vmbox))
 
 info:
 	@ruby -r ipaddr -e 'load "config.rb"; print("Nodes: \n"); (0..$$worker_count).each { |i| print("  ", (i == 0) ? "k8s-master" : "k8s-worker-%d" % i, "\t  ", (IPAddr.new $$cluster_ips)|(1+i), "\n")}; print("\nLoadBalancers: ", $$metallb_ips, "\n")'
