@@ -156,13 +156,14 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kube*
 EOF
 
 
 if [ -n "${K8SVERSION}" ]; then
-  yum install -y kubelet-${K8SVERSION} kubeadm-${K8SVERSION} kubectl-${K8SVERSION} kubernetes-cni 
+  yum install -y kubelet-${K8SVERSION} kubeadm-${K8SVERSION} kubectl-${K8SVERSION} kubernetes-cni --disableexcludes=kubernetes
 else
-  yum install -y kubelet kubeadm kubectl kubernetes-cni 
+  yum install -y kubelet kubeadm kubectl kubernetes-cni --disableexcludes=kubernetes
 fi
 
 systemctl start docker
