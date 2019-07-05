@@ -182,3 +182,16 @@ sed -i "s/\(KUBELET_EXTRA_ARGS=\).*/\1--node-ip=${IPADDR}/" /etc/sysconfig/kubel
 
 # systemctl start dnsmasq
 # systemctl enable dnsmasq
+
+cat <<END
+
+================================================================================
+
+    Kubectl Bash Completion
+
+================================================================================
+
+END
+
+yum install -y bash-completion
+echo 'source <(kubectl completion bash)' > /etc/profile.d/kubectl.sh
