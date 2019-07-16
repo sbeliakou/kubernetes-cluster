@@ -1,0 +1,62 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nfs-server
+spec:
+  ports:
+    - name: nfs
+      port: 2049
+      protocol: TCP
+    - name: mountd
+      port: 20048
+      protocol: TCP
+    - name: rpcbind-tcp
+      port: 111
+      protocol: TCP
+    - name: rpcbind-udp
+      port: 111
+      protocol: UDP
+  selector:
+    role: nfs-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: nfs-server
+  template:
+    metadata:
+      labels:
+        role: nfs-server
+    spec:
+      # nodeSelector:
+      #   external-storage: "true"
+      containers:
+      - name: nfs-server
+        image: gcr.io/google_containers/volume-nfs:0.8
+        ports:
+          - name: nfs
+            protocol: TCP
+            containerPort: 2049
+          - name: mountd
+            protocol: TCP
+            containerPort: 20048
+          - name: rpcbind-tcp
+            protocol: TCP
+            containerPort: 111
+          - name: rpcbind-udp
+            protocol: UDP
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /exports
+            name: nfs-export-fast
+      volumes:
+        - name: nfs-export-fast
+          hostPath:
+            path: /data/nfs
