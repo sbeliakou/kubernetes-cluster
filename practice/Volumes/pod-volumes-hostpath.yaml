@@ -1,0 +1,23 @@
+# curl --unix-socket /tmp/docker.sock -X GET http://docker/images/json
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volumes-hostpath
+spec:
+  containers:
+  - name: container
+    image: sbeliakou/curl
+    command: ["sleep", "1000"]
+    volumeMounts:
+    - name: docker-sock
+      mountPath: /tmp/docker.sock
+    - name: data-storage
+      mountPath: /etc/app-data
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+  - name: data-storage
+    hostPath:
+      path: /etc/app-data
