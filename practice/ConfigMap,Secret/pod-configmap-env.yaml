@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config-v1
+data:
+  SPECIAL_LEVEL: very
+  SPECIAL_TYPE: charm
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-configmap-env
+spec:
+  containers:
+    - name: container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "echo SPECIAL_LEVEL=$(SPECIAL_LEVEL) and SPECIAL_TYPE=$(SPECIAL_TYPE)" ]
+      env:
+        - name: SPECIAL_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: special-config-v1
+              key: SPECIAL_LEVEL
+        - name: SPECIAL_TYPE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: special-config-v1
+              key: SPECIAL_TYPE
+  restartPolicy: Never

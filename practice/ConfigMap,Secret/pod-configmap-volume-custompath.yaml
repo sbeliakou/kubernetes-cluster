@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config-v4
+data:
+  config-file: |
+    {
+      "list": [
+        "a",
+        "b",
+        "c"
+      ],
+      "setting": "done"
+    }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-configmap-volume-custompath
+spec:
+  containers:
+    - name: container
+      image: busybox
+      command: [ "/bin/sh", "-c", "ls -l /etc/config/; cat /etc/config/config.json" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: special-config-v4
+        items:
+        - key: config-file
+          path: config.json
+  restartPolicy: Never
