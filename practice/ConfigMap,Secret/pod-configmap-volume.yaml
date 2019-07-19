@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config-v3
+data:
+  SPECIAL_LEVEL: very
+  SPECIAL_TYPE: charm
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-configmap-volume
+spec:
+  containers:
+    - name: container
+      image: busybox
+      command: [ "/bin/sh", "-c", "ls -l /etc/config/; cat /etc/config/SPECIAL_LEVEL; cat /etc/config/SPECIAL_TYPE" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: special-config-v3
+  restartPolicy: Never
