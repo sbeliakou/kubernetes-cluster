@@ -3,36 +3,37 @@
 cat <<END
 Executing ${0}
 ================================================================================
-
     Installing Ingress Controller
-
-    - https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/index.md
-    - https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/baremetal.md
+    - https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md
     - https://kubernetes.github.io/ingress-nginx/deploy/#bare-metal
-
 ================================================================================
-
 END
 
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.0/deploy/static/mandatory.yaml
 
-version="nginx-0.24.1"
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/${version}/deploy/mandatory.yaml
-
+NGINX_NS="ingress-nginx"
 is_metallb=${1}
 
 if [ "${is_metallb}" == "true" ]; then
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/${version}/deploy/provider/cloud-generic.yaml
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.0/deploy/static/provider/cloud-generic.yaml
 else
-  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/${version}/deploy/provider/baremetal/service-nodeport.yaml
   IPADDR=$(kubectl get node -l node-role.kubernetes.io/master -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
-  kubectl patch svc ingress-nginx -n ingress-nginx --patch '{ "spec": {"externalIPs": [ "'${IPADDR}'" ] }}'
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.0/deploy/baremetal/service-nodeport.yaml
+  kubectl patch svc ingress-nginx -n ${NGINX_NS} --patch '{
+    "spec": {
+      "externalIPs": [
+        "'${IPADDR}'"
+      ]
+    }
+  }'
 fi
 
-while [ "$(kubectl get pod -n ingress-nginx -o jsonpath='{.items[0].status.phase}')" != "Running" ]; do
+while [ "$(kubectl get pod -n ${NGINX_NS} -o jsonpath='{.items[0].status.phase}')" != "Running" ]; do
   echo $(date +"[%H:%M:%S]") Nginx Ingress Controller not Ready
   sleep 10
 done
 
-kubectl get svc -n ingress-nginx
+# kubectl get pods --all-namespaces -l app==nginx-ingress
+kubectl get svc -n ${NGINX_NS}
+
+# rm -rf kubernetes-ingress/deployments
