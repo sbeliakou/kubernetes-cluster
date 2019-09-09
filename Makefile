@@ -5,6 +5,14 @@ ifeq (ssh, $(firstword $(MAKECMDGOALS)))
   $(eval $(vmbox):;@true)
 endif
 
+
+ifeq (set, $(firstword $(MAKECMDGOALS)))
+  prm_key := $(word 2, $(MAKECMDGOALS))
+  prm_val := $(word 3, $(MAKECMDGOALS))
+  $(eval $(prm_key):;@true)
+  $(eval $(prm_val):;@true)
+endif
+
 base = "CentOS"
 
 help:
@@ -46,7 +54,11 @@ whoup:       ## Show Running VMs
 who: whoup
 
 ssh:         ## SSH Jump Into VM
-	cd vagrant/$(base) && vagrant ssh $(shell /usr/bin/env ruby vagrant/$(base)/names.rb $(vmbox))
+	@cd vagrant/$(base) && vagrant ssh $(shell /usr/bin/env ruby vagrant/$(base)/names.rb $(vmbox))
 
-info:
+info:        ## Get Infrastructure Info
 	@ruby -r ipaddr -e 'load "config.rb"; print("Nodes: \n"); (0..$$worker_count).each { |i| print("  ", (i == 0) ? "k8s-master" : "k8s-worker-%d" % i, "\t  ", (IPAddr.new $$cluster_ips)|(1+i), "\n")}; print("\nLoadBalancers: ", $$metallb_ips, "\n")'
+
+set:         ## Set Confuration Parameters
+	@if [ $(shell grep $(prm_key) config.rb | wc -l) -eq 1 ]; then sed -i 's/\($(prm_key).*\)=.*/\1= $(prm_val)/' config.rb; grep $(prm_key) config.rb; else grep $(prm_key) config.rb; fi
+
