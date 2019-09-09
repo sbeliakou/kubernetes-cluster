@@ -5,7 +5,7 @@ $token = "abcdef.0123456789abcdef"
 $master_memory = 6000
 
 # Worker Nodes, 0 = Master Isolation
-$worker_count = 2
+$worker_count = 1
 
 # Total memory of nodes
 $worker_memory = 1536
