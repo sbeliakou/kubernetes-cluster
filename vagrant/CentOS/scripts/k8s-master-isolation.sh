@@ -18,7 +18,7 @@ node_status=$(kubectl get nodes ${HOSTNAME} -o yaml | grep node-role.kubernetes.
 
 if [ ${node_status} -ne 0 ]; then
 	kubectl taint nodes --all node-role.kubernetes.io/master-
-  kubectl patch node ${HOSTNAME} --patch='{"metadata": {"labels": {"node-role.kubernetes.io/node": ""}}}'
+  kubectl label node k8s-master node-role.kubernetes.io/node=
   echo Node Role is Assigned to ${HOSTNAME}
 else
   echo Node Role is Already Assigned to ${HOSTNAME}
