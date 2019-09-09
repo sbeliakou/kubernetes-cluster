@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
             node.vm.provision "shell", 
                 name: "Base Installation (scripts/base.sh)",
                 path: "scripts/base.sh",
+                keep_color: true,
                 env: {
                     K8SVERSION:$k8s_version
                 }
@@ -47,27 +48,39 @@ Vagrant.configure("2") do |config|
                 args: [
                     "#{nodeIP($cluster_ips, 0)}",
                     "#{$token}"
-                ]
+                ],
+                keep_color: true
 
             if $worker_count == 0
                 node.vm.provision "shell",
                     name: "Master Isolation (scripts/k8s-master-isolation.sh)",
-                    path: "scripts/k8s-master-isolation.sh"
+                    path: "scripts/k8s-master-isolation.sh",
+                    keep_color: true
+            end
+
+            if index == 0
+                node.vm.provision "shell", 
+                    name: "Kubernetes Pod Network (scripts/k8s-pod_network-flannel.sh)",
+                    path: "scripts/k8s-pod_network-#{$pod_network}.sh",
+                    keep_color: true
             end
 
             if index == $worker_count
                 node.vm.provision "shell", 
                     name: "Kubernetes Metrics Server (scripts/k8s-metrics-server.sh)",
-                    path: "scripts/k8s-metrics-server.sh"
+                    path: "scripts/k8s-metrics-server.sh",
+                    keep_color: true
 
                 node.vm.provision "shell", 
                     name: "Kubernetes Dashboard (scripts/k8s-dashboard.sh)",
-                    path: "scripts/k8s-dashboard.sh"
+                    path: "scripts/k8s-dashboard.sh",
+                    keep_color: true
 
                 if $metallb
                 node.vm.provision "shell", 
                     name: "Metall LB (scripts/k8s-metallb.sh)",
                     path: "scripts/k8s-metallb.sh",
+                    keep_color: true,
                     args: [
                         "#{$metallb_ips}"
                     ]
@@ -77,6 +90,7 @@ Vagrant.configure("2") do |config|
                     node.vm.provision "shell", 
                         name: "Nginx Ingress Controller (scripts/k8s-ingress-nginx.sh)",
                         path: "scripts/k8s-ingress-nginx.sh",
+                        keep_color: true,
                         args: [
                             "#{$metallb}"
                         ]
@@ -86,6 +100,7 @@ Vagrant.configure("2") do |config|
                     node.vm.provision "shell", 
                         name: "Nginx Ingress Controller (scripts/k8s-ingress-istio.sh)",
                         path: "scripts/k8s-ingress-istio.sh",
+                        keep_color: true,
                         args: [
                             "#{$metallb}"
                         ]
@@ -94,7 +109,8 @@ Vagrant.configure("2") do |config|
                 if $prometheus
                     node.vm.provision "shell", 
                         name: "Prometheus Monitoring (scripts/k8s-prometheus.sh)",
-                        path: "scripts/k8s-prometheus.sh"
+                        path: "scripts/k8s-prometheus.sh",
+                        keep_color: true
                 end
             end
         end

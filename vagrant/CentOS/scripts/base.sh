@@ -43,6 +43,7 @@ cat <<END
 
 END
 
+sestatus
 getenforce | grep Disabled || setenforce 0
 echo "SELINUX=disabled" > /etc/sysconfig/selinux
 
