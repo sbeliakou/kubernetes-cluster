@@ -15,3 +15,19 @@ Executing ${0}
 END
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
+
+# Move to Master
+kubectl -n kube-system patch deployment metrics-server -p '{
+  "spec": {
+    "template": {
+      "spec": {
+        "tolerations": [
+          {
+            "effect": "NoSchedule", 
+            "key": "node-role.kubernetes.io/master"
+          }
+        ]
+      }
+    }
+  }
+}'
