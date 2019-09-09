@@ -13,14 +13,21 @@ Executing ${0}
       - net-tools
       - bind-utils
       - moreutils
+      - nfs-utils
 
 ================================================================================
 
 END
 
+# This setting limits the number of discrete mapped memory areas - 
+# on its own it imposes no limit on the size of those areas or on 
+# the memory that is usable by a process. Default id 65536
+sysctl -w vm.max_map_count=262144
+
+
 yum install -y deltarpm
 yum update  -y
-yum install -y epel-release wget ntp jq git net-tools bind-utils moreutils
+yum install -y epel-release wget ntp jq git net-tools bind-utils moreutils nfs-utils
 
 # yum install -y nss-mdns avahi avahi-tools
 # systemctl enable avahi-daemon
