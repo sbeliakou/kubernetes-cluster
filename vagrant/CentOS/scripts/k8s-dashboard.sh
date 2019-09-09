@@ -26,7 +26,14 @@ if [ $dash -ne 0 ]; then
     echo Get More Details: https://github.com/kubernetes/dashboard#kubernetes-dashboard
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
     # Add to Cluster Info
-    kubectl patch svc -n kube-system kubernetes-dashboard --patch='{"metadata": {"labels": {"kubernetes.io/cluster-service": "true"}}}'
+    kubectl patch svc -n kube-system kubernetes-dashboard --patch='{
+      "metadata": {
+        "labels": {
+          "kubernetes.io/cluster-service": "true",
+          "k8s-addon": "kubernetes-dashboard.addons.k8s.io"
+        }
+      }
+    }'
     
     cat << EOF | kubectl apply -f -
 ---
