@@ -20,6 +20,9 @@ $metallb_ips = "192.168.56.240/28"
 # Deploy Metal LB
 $metallb = true
 
+# POD Network
+$pod_network = "flannel"
+
 # Deploy Ingress Controller
 $ingress_controller = "nginx"
 
