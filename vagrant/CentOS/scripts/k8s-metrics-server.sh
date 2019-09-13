@@ -8,37 +8,26 @@ Executing ${0}
 
     - https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md
     - https://github.com/linuxacademy/metrics-server
+    - https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
 
 ================================================================================
 
 END
 
-yum install -y git
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/metrics-server/v1.8.x.yaml
 
-cd /tmp/
-git clone https://github.com/kubernetes-incubator/metrics-server.git
-cd metrics-server
-
-kubectl create -f deploy/1.8+/
-# ps -eo args | grep -v grep | grep apiserver | sed 's/--/\n  --/g'
-# ... --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname ...
-kubectl patch deployment/metrics-server -n kube-system --patch '{
+# Move to Master
+kubectl -n kube-system patch deployment metrics-server -p '{
   "spec": {
     "template": {
       "spec": {
-        "containers": [
+        "tolerations": [
           {
-            "name": "metrics-server", 
-            "command":[
-              "/metrics-server", 
-              "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname",
-              "--kubelet-insecure-tls"
-            ]
+            "effect": "NoSchedule", 
+            "key": "node-role.kubernetes.io/master"
           }
         ]
       }
     }
   }
 }'
-
-rm -rf metrics-server

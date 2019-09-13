@@ -2,3 +2,4 @@
 .kube
 nfs
 tmp
+*.box

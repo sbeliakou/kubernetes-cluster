@@ -13,14 +13,21 @@ Executing ${0}
       - net-tools
       - bind-utils
       - moreutils
+      - nfs-utils
 
 ================================================================================
 
 END
 
+# This setting limits the number of discrete mapped memory areas - 
+# on its own it imposes no limit on the size of those areas or on 
+# the memory that is usable by a process. Default id 65536
+sysctl -w vm.max_map_count=262144
+
+
 yum install -y deltarpm
 yum update  -y
-yum install -y epel-release wget ntp jq git net-tools bind-utils moreutils
+yum install -y epel-release wget ntp jq git net-tools bind-utils moreutils nfs-utils
 
 # yum install -y nss-mdns avahi avahi-tools
 # systemctl enable avahi-daemon
@@ -36,6 +43,7 @@ cat <<END
 
 END
 
+sestatus
 getenforce | grep Disabled || setenforce 0
 echo "SELINUX=disabled" > /etc/sysconfig/selinux
 
@@ -156,13 +164,14 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kube*
 EOF
 
 
 if [ -n "${K8SVERSION}" ]; then
-  yum install -y kubelet-${K8SVERSION} kubeadm-${K8SVERSION} kubectl-${K8SVERSION} kubernetes-cni 
+  yum install -y kubelet-${K8SVERSION} kubeadm-${K8SVERSION} kubectl-${K8SVERSION} kubernetes-cni --disableexcludes=kubernetes
 else
-  yum install -y kubelet kubeadm kubectl kubernetes-cni 
+  yum install -y kubelet kubeadm kubectl kubernetes-cni --disableexcludes=kubernetes
 fi
 
 systemctl start docker
@@ -181,3 +190,16 @@ sed -i "s/\(KUBELET_EXTRA_ARGS=\).*/\1--node-ip=${IPADDR}/" /etc/sysconfig/kubel
 
 # systemctl start dnsmasq
 # systemctl enable dnsmasq
+
+cat <<END
+
+================================================================================
+
+    Kubectl Bash Completion
+
+================================================================================
+
+END
+
+yum install -y bash-completion
+echo 'source <(kubectl completion bash)' > /etc/profile.d/kubectl.sh
