@@ -5,7 +5,7 @@ Kubernetes doesn’t manage users. Normal users are assumed to be managed by an 
 Any user that presents a valid certificate signed by the cluster’s certificate authority (CA) is considered authenticated. In this configuration, Kubernetes determines the username from the common name field in the ‘subject’ of the cert (e.g., "/CN=jj"). From there, the role based access control (RBAC) sub-system would determine whether the user is authorized to perform a specific operation a resource.
 
 
-## Provising Access to the Cluster
+## Providing Access to the Cluster
 
 The first step is to create a key and certificate signing request (CSR) for JJ’s access to the cluster using `openssl`:
 ```
